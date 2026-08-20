@@ -3,519 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What's Your Time Worth?</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>How Much Is My Time Worth?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
+        :root {
+            --bg-forest: #0B3022;
+            --bg-forest-card: #0D3324;
+            --bg-input: #123D2D;
+            --bg-input-focus: #174A37;
+            --cream: #F5F2EB;
+            --cream-muted: #D1CBC0;
+            --gold: #D4AF37;
+            --gold-light: #E6CA65;
+            --border-forest: rgba(212, 175, 55, 0.15);
+            --border-focus: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Notion Embed Theme Synchronization */
+        html, body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            background-color: transparent;
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #f8f4ec;
-            padding: 8px;
-        }
-
-        /* Outer Frame styled with the flat lay background image */
-        .card-frame {
-            background-image: url('background.png'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #e8dfd1; /* Fallback tone matching the flat lay */
-            width: 100%;
-            max-width: 614px;
-            height: 448px;
-            padding: 38px 46px; /* Generous padding so content sits neatly in the negative center space */
-            border-radius: 24px;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+            color: var(--cream);
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        /* Header */
-        .widget-header {
-            text-align: left;
-            margin-bottom: 4px;
+        @media (prefers-color-scheme: dark) {
+            html, body {
+                background: #191919;
+            }
         }
 
-        .header-title-row {
+        /* Outer Composition Frame matching reference 1502x773 proportions */
+        .composition {
+            position: relative;
+            width: 100%;
+            max-width: 1502px;
+            aspect-ratio: 1502 / 773;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 24px;
+            overflow: hidden;
         }
 
-        .header-icon {
-            font-size: 13px;
+        /* Central Forest-Green Widget Card */
+        .widget-card {
+            position: relative;
+            width: 60%;
+            max-width: 880px;
+            height: 82%;
+            max-height: 560px;
+            background-color: var(--bg-forest);
+            border: 1px solid var(--border-forest);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            padding: 32px 40px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
         }
 
-        .widget-header h1 {
+        .widget-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .widget-card::-webkit-scrollbar-thumb {
+            background-color: var(--gold);
+            border-radius: 4px;
+        }
+
+        /* Header Section */
+        .widget-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .widget-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .widget-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 17px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #12261b; /* Dark forest green for high contrast on the beige background */
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--cream);
+            margin: 0 0 4px 0;
+            letter-spacing: -0.01em;
         }
 
-        .subtitle {
+        .widget-subtitle {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 11px;
-            color: #314438;
-            margin-top: 1px;
+            font-size: 16px;
+            color: var(--cream-muted);
+            margin: 0;
         }
 
-        /* Content Grid */
-        .content-grid {
+        /* Interactive Inputs Grid */
+        .inputs-grid {
             display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 12px;
-            align-items: stretch;
-            flex: 1;
-            margin-top: 4px;
-            margin-bottom: 4px;
-        }
-
-        /* Input Panel */
-        .input-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            justify-content: space-between;
-        }
-
-        .section-box {
-            background: rgba(18, 38, 27, 0.05); /* Very subtle dark forest tint overlay */
-            border: 1px solid rgba(18, 38, 27, 0.12);
-            border-radius: 10px;
-            padding: 8px 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 9.5px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #314438;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 2px;
         }
 
         .input-label {
-            font-size: 9.5px;
-            color: #425549;
-            font-weight: 500;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-bottom: 8px;
         }
 
         .input-field-wrapper {
             position: relative;
             display: flex;
             align-items: center;
+            background-color: var(--bg-input);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .input-field-wrapper:focus-within {
+            background-color: var(--bg-input-focus);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
         }
 
         .input-prefix {
-            position: absolute;
-            left: 8px;
-            font-size: 10.5px;
-            color: #314438;
-            font-weight: 600;
-        }
-
-        .styled-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(18, 38, 27, 0.2);
-            border-radius: 7px;
-            padding: 4px 7px 4px 20px;
-            color: #12261b;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 10.5px;
+            padding-left: 14px;
+            font-size: 14px;
+            color: var(--gold);
             font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
             outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .styled-input.no-prefix {
-            padding-left: 7px;
-        }
-
-        .styled-input:focus {
-            border-color: #12261b;
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        .action-row {
-            display: flex;
-            gap: 6px;
-        }
-
-        .calc-btn {
-            flex: 1;
-            background: #12261b;
-            color: #f8f4ec;
-            border: 1px solid rgba(18, 38, 27, 0.3);
+            color: var(--cream);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 9.5px;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            padding: 6px;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 15px;
+            padding: 12px 14px 12px 6px;
         }
 
-        .calc-btn:hover {
-            background: #1d3a2b;
+        .input-field::placeholder {
+            color: rgba(245, 242, 235, 0.3);
         }
 
-        .reset-btn {
-            background: rgba(18, 38, 27, 0.08);
-            border: 1px solid rgba(18, 38, 27, 0.2);
-            color: #12261b;
-            font-size: 9.5px;
-            font-weight: 600;
-            padding: 6px 9px;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .reset-btn:hover {
-            background: rgba(18, 38, 27, 0.15);
-        }
-
-        /* Result Panel */
-        .result-panel {
+        /* Calculate & Reset Actions */
+        .actions-row {
             display: flex;
-            flex-direction: column;
-        }
-
-        .result-card {
-            background: rgba(18, 38, 27, 0.05);
-            border: 1px solid rgba(18, 38, 27, 0.12);
-            border-radius: 10px;
-            padding: 12px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .result-placeholder {
-            text-align: center;
-            border: 1px dashed rgba(18, 38, 27, 0.25);
-            border-radius: 10px;
-            padding: 16px 10px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .placeholder-icon {
-            font-size: 18px;
-        }
-
-        .placeholder-text {
-            font-size: 10.5px;
-            color: #314438;
-            line-height: 1.35;
-            max-width: 170px;
-            text-align: center;
-        }
-
-        .result-header-row {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border-bottom: 1px solid rgba(18, 38, 27, 0.1);
-            padding-bottom: 5px;
-        }
-
-        .result-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 10.5px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #314438;
-        }
-
-        .hourly-display {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(18, 38, 27, 0.1);
-            border-radius: 7px;
-            padding: 5px 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hourly-label {
-            font-size: 9.5px;
-            color: #425549;
-        }
-
-        .hourly-value {
-            font-family: 'Cormorant Garamond', serif;
+        .btn-calculate {
+            background-color: var(--gold);
+            color: #0B3022;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 24px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 13px;
             font-weight: 600;
-            color: #12261b;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .primary-result-box {
-            text-align: center;
-            padding: 4px 0;
+        .btn-calculate:hover {
+            background-color: var(--gold-light);
+            transform: translateY(-1px);
         }
 
-        .time-cost-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #12261b;
-            line-height: 1.1;
-            margin-bottom: 2px;
+        .btn-reset {
+            background: transparent;
+            border: none;
+            color: var(--cream-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: color 0.2s ease;
         }
 
-        .time-breakdown {
+        .btn-reset:hover {
+            color: var(--cream);
+        }
+
+        /* Result Area */
+        .result-area {
+            display: none;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .result-box {
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 12px 16px;
+            border-left: 2px solid var(--gold);
+        }
+
+        .result-box-label {
             font-size: 10px;
-            color: #314438;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-bottom: 4px;
         }
 
-        .reflection-box {
-            background: rgba(18, 38, 27, 0.06);
-            border-left: 2px solid #12261b;
-            padding: 5px 7px;
-            border-radius: 0 5px 5px 0;
+        .result-box-value {
             font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .result-insight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
             font-style: italic;
-            font-size: 11px;
-            color: #213629;
-            line-height: 1.3;
+            color: var(--cream);
+            background-color: rgba(212, 175, 55, 0.05);
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            margin: 0;
         }
 
         .error-message {
-            font-size: 10px;
-            color: #8c2e2e;
-            text-align: center;
-            background: rgba(140, 46, 46, 0.08);
-            border: 1px solid rgba(140, 46, 46, 0.2);
-            padding: 5px;
-            border-radius: 5px;
-            margin-top: 4px;
+            color: #E06D53;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
         }
 
-        .hidden {
-            display: none !important;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Breakpoint */
-        @media (max-width: 520px) {
-            .card-frame {
-                max-width: 100%;
-                height: auto;
-                padding: 16px;
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .widget-card {
+                width: 85%;
+                height: 85%;
+                padding: 24px;
             }
-
-            .content-grid {
+            .inputs-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 12px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="card-frame">
-        <!-- Header -->
-        <div class="widget-header">
-            <div class="header-title-row">
-                <span class="header-icon">💼</span>
-                <h1>What's Your Time Worth?</h1>
+    <div class="composition">
+        <div class="widget-card">
+            
+            <!-- Widget Header -->
+            <div class="widget-header">
+                <div class="widget-icon">💼</div>
+                <h1 class="widget-title">How Much Is My Time Worth?</h1>
+                <p class="widget-subtitle">Turn money into time. Understand the true human cost of your purchases.</p>
             </div>
-            <p class="subtitle">See what your spending costs in hours, not just dollars.</p>
+
+            <!-- Inputs Section -->
+            <div class="inputs-grid" id="inputSection">
+                <div class="input-group">
+                    <label class="input-label" for="incomeInput">Annual Income</label>
+                    <div class="input-field-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="incomeInput" class="input-field" placeholder="60000" min="1" step="any">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="hoursInput">Hours Worked / Week</label>
+                    <div class="input-field-wrapper">
+                        <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 14px;">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="priceInput">What does it cost?</label>
+                    <div class="input-field-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="priceInput" class="input-field" placeholder="200" min="0" step="any">
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMsg" class="error-message">Please fill in valid positive numbers for all fields.</div>
+
+            <!-- Initial Action Controls -->
+            <div class="actions-row" id="initialActions">
+                <button class="btn-calculate" id="calcBtn">Calculate Time Cost</button>
+                <button class="btn-reset" id="resetBtn" style="visibility: hidden;">Reset</button>
+            </div>
+
+            <!-- Dynamic Result Area -->
+            <div class="result-area" id="resultArea">
+                <div class="result-grid">
+                    <div class="result-box">
+                        <div class="result-box-label">Your Hourly Value</div>
+                        <div class="result-box-value" id="hourlyResult">$0.00</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-box-label">Time Cost</div>
+                        <div class="result-box-value" id="timeResult">0.0 hrs</div>
+                    </div>
+                </div>
+                <p class="result-insight" id="insightText">💭 Calculating your time...</p>
+                <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                    <button class="btn-reset" id="resetBtnActive">Reset Calculator</button>
+                </div>
+            </div>
+
         </div>
-
-        <!-- Content Grid -->
-        <div class="content-grid">
-            <!-- Left Panel: Inputs -->
-            <div class="input-panel">
-                <!-- Section 1: Income -->
-                <div class="section-box">
-                    <span class="section-title">Your Income</span>
-                    <div class="input-group">
-                        <label class="input-label" for="annualIncome">Annual income</label>
-                        <div class="input-field-wrapper">
-                            <span class="input-prefix">$</span>
-                            <input type="number" id="annualIncome" class="styled-input" placeholder="60,000" min="0">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label" for="weeklyHours">Hours worked per week</label>
-                        <div class="input-field-wrapper">
-                            <input type="number" id="weeklyHours" class="styled-input no-prefix" value="40" min="1" max="168">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 2: Purchase -->
-                <div class="section-box">
-                    <span class="section-title">Thinking About a Purchase?</span>
-                    <div class="input-group">
-                        <label class="input-label" for="purchasePrice">Purchase price</label>
-                        <div class="input-field-wrapper">
-                            <span class="input-prefix">$</span>
-                            <input type="number" id="purchasePrice" class="styled-input" placeholder="200" min="0">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="action-row">
-                    <button id="calcBtn" class="calc-btn">Calculate Time Cost</button>
-                    <button id="resetBtn" class="reset-btn">Reset</button>
-                </div>
-            </div>
-
-            <!-- Right Panel: Display / Results -->
-            <div class="result-panel">
-                <!-- Initial / Placeholder State -->
-                <div id="placeholderState" class="result-placeholder">
-                    <span class="placeholder-icon">⏳</span>
-                    <p class="placeholder-text">Enter your numbers to see the time cost.</p>
-                </div>
-
-                <!-- Active Result State -->
-                <div id="resultState" class="result-card hidden">
-                    <div class="result-header-row">
-                        <span class="placeholder-icon" style="font-size: 12px;">⏳</span>
-                        <span class="result-title">Your Time Cost</span>
-                    </div>
-
-                    <div class="hourly-display">
-                        <span class="hourly-label">Hourly value:</span>
-                        <span id="hourlyValueDisplay" class="hourly-value">$0.00 / hour</span>
-                    </div>
-
-                    <div class="primary-result-box">
-                        <div id="timeCostNumber" class="time-cost-number">0.0 HOURS</div>
-                        <div id="timeBreakdown" class="time-breakdown">That's approximately 0 hours and 0 minutes of work.</div>
-                    </div>
-
-                    <div class="reflection-box">
-                        Is it worth the time it takes to earn it?
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="errorMsg" class="error-message hidden"></div>
     </div>
 
     <script>
-        const annualIncomeInput = document.getElementById('annualIncome');
-        const weeklyHoursInput = document.getElementById('weeklyHours');
-        const purchasePriceInput = document.getElementById('purchasePrice');
         const calcBtn = document.getElementById('calcBtn');
         const resetBtn = document.getElementById('resetBtn');
-        
-        const placeholderState = document.getElementById('placeholderState');
-        const resultState = document.getElementById('resultState');
-        const hourlyValueDisplay = document.getElementById('hourlyValueDisplay');
-        const timeCostNumber = document.getElementById('timeCostNumber');
-        const timeBreakdown = document.getElementById('timeBreakdown');
+        const resetBtnActive = document.getElementById('resetBtnActive');
+        const inputSection = document.getElementById('inputSection');
+        const initialActions = document.getElementById('initialActions');
+        const resultArea = document.getElementById('resultArea');
         const errorMsg = document.getElementById('errorMsg');
 
-        function showError(message) {
-            errorMsg.textContent = message;
-            errorMsg.classList.remove('hidden');
+        const incomeInput = document.getElementById('incomeInput');
+        const hoursInput = document.getElementById('hoursInput');
+        const priceInput = document.getElementById('priceInput');
+
+        const hourlyResult = document.getElementById('hourlyResult');
+        const timeResult = document.getElementById('timeResult');
+        const insightText = document.getElementById('insightText');
+
+        function performCalculation() {
+            const income = parseFloat(incomeInput.value);
+            const hoursPerWeek = parseFloat(hoursInput.value);
+            const price = parseFloat(priceInput.value);
+
+            if (isNaN(income) || isNaN(hoursPerWeek) || isNaN(price) || income <= 0 || hoursPerWeek <= 0 || price < 0) {
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+
+            // Calculations
+            const annualHours = hoursPerWeek * 52;
+            const hourlyVal = income / annualHours;
+            const hoursRequired = price / hourlyVal;
+
+            // Display Results
+            hourlyResult.textContent = `$${hourlyVal.toFixed(2)} / hr`;
+            timeResult.textContent = `${hoursRequired.toFixed(1)} hours`;
+
+            // Dynamic Psychological Insight Wording
+            let insight = "";
+            if (hoursRequired < 1) {
+                const minutes = Math.round(hoursRequired * 60);
+                insight = `💭 That's about ${minutes} minutes of work. A minor trade for your time.`;
+            } else if (hoursRequired >= 1 && hoursRequired < 4) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — a fraction of your workweek. Is it worth it?`;
+            } else if (hoursRequired >= 4 && hoursRequired < 8) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — almost a full workday.`;
+            } else if (hoursRequired >= 8 && hoursRequired < 24) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than a full workday.`;
+            } else if (hoursRequired >= 24 && hoursRequired < 40) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — several days of your life spent earning it.`;
+            } else {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than an entire workweek dedicated to this purchase.`;
+            }
+
+            insightText.textContent = insight;
+
+            // Transition UI views smoothly
+            initialActions.style.display = 'none';
+            resultArea.style.display = 'block';
+            resetBtn.style.visibility = 'visible';
         }
 
-        function hideError() {
-            errorMsg.textContent = '';
-            errorMsg.classList.add('hidden');
+        function resetCalculator() {
+            incomeInput.value = '';
+            hoursInput.value = '';
+            priceInput.value = '';
+            errorMsg.style.display = 'none';
+
+            resultArea.style.display = 'none';
+            initialActions.style.display = 'flex';
+            resetBtn.style.visibility = 'hidden';
         }
 
-        calcBtn.addEventListener('click', () => {
-            hideError();
+        calcBtn.addEventListener('click', performCalculation);
+        resetBtn.addEventListener('click', resetCalculator);
+        resetBtnActive.addEventListener('click', resetCalculator);
 
-            const incomeVal = annualIncomeInput.value.trim();
-            const hoursVal = weeklyHoursInput.value.trim();
-            const purchaseVal = purchasePriceInput.value.trim();
-
-            if (incomeVal === '' || hoursVal === '') {
-                showError('Enter your income and working hours to continue.');
-                return;
-            }
-
-            const annualIncome = parseFloat(incomeVal);
-            const weeklyHours = parseFloat(hoursVal);
-
-            if (isNaN(annualIncome) || isNaN(weeklyHours) || annualIncome < 0 || weeklyHours <= 0) {
-                showError('Please enter valid positive numbers for income and hours.');
-                return;
-            }
-
-            if (purchaseVal === '') {
-                showError('Enter a purchase amount to calculate its time cost.');
-                return;
-            }
-
-            const purchasePrice = parseFloat(purchaseVal);
-
-            if (isNaN(purchasePrice) || purchasePrice < 0) {
-                showError('Please enter a valid positive number for the purchase price.');
-                return;
-            }
-
-            const hourlyRate = annualIncome / (52 * weeklyHours);
-            const purchaseHours = purchasePrice / hourlyRate;
-
-            hourlyValueDisplay.textContent = `$${hourlyRate.toFixed(2)} / hour`;
-
-            const roundedHoursDecimal = purchaseHours.toFixed(1);
-            const totalMinutes = Math.round(purchaseHours * 60);
-            const fullHours = Math.floor(totalMinutes / 60);
-            const remainingMins = totalMinutes % 60;
-
-            timeCostNumber.textContent = `${roundedHoursDecimal} HOURS`;
-            timeBreakdown.textContent = `That's approximately ${fullHours} hours and ${remainingMins} minutes of work.`;
-
-            placeholderState.classList.add('hidden');
-            resultState.classList.remove('hidden');
-        });
-
-        resetBtn.addEventListener('click', () => {
-            annualIncomeInput.value = '';
-            weeklyHoursInput.value = '40';
-            purchasePriceInput.value = '';
-            hideError();
-
-            resultState.classList.add('hidden');
-            placeholderState.classList.remove('hidden');
+        // Allow pressing Enter from any input field
+        [incomeInput, hoursInput, priceInput].forEach(element => {
+            element.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    performCalculation();
+                }
+            });
         });
     </script>
 </body>

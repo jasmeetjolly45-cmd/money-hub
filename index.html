@@ -20,7 +20,6 @@
             --border-focus: rgba(212, 175, 55, 0.4);
         }
 
-        /* Notion Embed Theme Synchronization */
         html, body {
             margin: 0;
             padding: 0;
@@ -41,7 +40,6 @@
             }
         }
 
-        /* Exact Composition matching the 613 × 447 reference ratio with ~36px frame spacing */
         .composition {
             position: relative;
             width: 100%;
@@ -57,7 +55,6 @@
             padding: 36px;
         }
 
-        /* Central Forest-Green Widget Card */
         .widget-card {
             position: relative;
             width: 100%;
@@ -83,21 +80,20 @@
             border-radius: 3px;
         }
 
-        /* Header Section */
         .widget-header {
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .widget-icon {
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 2px;
             display: inline-block;
         }
 
         .widget-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 500;
             color: var(--cream);
             margin: 0 0 2px 0;
@@ -107,17 +103,16 @@
         .widget-subtitle {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--cream-muted);
             margin: 0;
         }
 
-        /* Interactive Inputs Grid */
         .inputs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .input-group {
@@ -126,12 +121,12 @@
         }
 
         .input-label {
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--cream-muted);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .input-field-wrapper {
@@ -152,7 +147,7 @@
 
         .input-prefix {
             padding-left: 8px;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gold);
             font-weight: 500;
         }
@@ -164,21 +159,20 @@
             outline: none;
             color: var(--cream);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 12px;
-            padding: 8px 10px 8px 4px;
+            font-size: 11px;
+            padding: 7px 8px 7px 4px;
         }
 
         .input-field::placeholder {
             color: rgba(245, 242, 235, 0.25);
         }
 
-        /* Actions & Buttons */
         .actions-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-top: auto;
-            padding-top: 10px;
+            padding-top: 8px;
         }
 
         .btn-calculate {
@@ -215,11 +209,10 @@
             color: var(--cream);
         }
 
-        /* Result Area */
         .result-area {
             display: none;
             margin-top: auto;
-            padding-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             animation: fadeIn 0.3s ease forwards;
         }
@@ -227,19 +220,19 @@
         .result-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 6px;
         }
 
         .result-box {
             background-color: rgba(0, 0, 0, 0.15);
             border-radius: 6px;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-left: 2px solid var(--gold);
         }
 
         .result-box-label {
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -249,18 +242,18 @@
 
         .result-box-value {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
             color: var(--gold);
         }
 
         .result-insight {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 13px;
+            font-size: 12px;
             font-style: italic;
             color: var(--cream);
             background-color: rgba(212, 175, 55, 0.05);
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 5px;
             border: 1px solid rgba(212, 175, 55, 0.1);
             margin: 0;
@@ -268,8 +261,8 @@
 
         .error-message {
             color: #E06D53;
-            font-size: 11px;
-            margin-top: 4px;
+            font-size: 10px;
+            margin-top: 2px;
             display: none;
         }
 
@@ -278,17 +271,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Mobile Adjustments to fix squishing */
-        @media (max-width: 580px) {
+        /* Enhanced Mobile Stack Trigger */
+        @media (max-width: 768px) {
             .inputs-grid {
                 grid-template-columns: 1fr;
                 gap: 6px;
             }
+            .composition {
+                padding: 16px;
+            }
             .widget-card {
-                padding: 16px 18px;
+                padding: 16px;
             }
             .widget-title {
-                font-size: 19px;
+                font-size: 18px;
             }
         }
     </style>
@@ -298,14 +294,12 @@
     <div class="composition">
         <div class="widget-card">
             
-            <!-- Widget Header -->
             <div class="widget-header">
                 <div class="widget-icon">💼</div>
                 <h1 class="widget-title">How Much Is My Time Worth?</h1>
                 <p class="widget-subtitle">Turn money into time. Understand the true human cost of your purchases.</p>
             </div>
 
-            <!-- Inputs Section -->
             <div class="inputs-grid" id="inputSection">
                 <div class="input-group">
                     <label class="input-label" for="incomeInput">Annual Income</label>
@@ -333,13 +327,11 @@
 
             <div id="errorMsg" class="error-message">Please enter valid positive numbers.</div>
 
-            <!-- Initial Action Controls -->
             <div class="actions-row" id="initialActions">
                 <button class="btn-calculate" id="calcBtn">Calculate Time Cost</button>
                 <button class="btn-reset" id="resetBtn" style="visibility: hidden;">Reset</button>
             </div>
 
-            <!-- Dynamic Result Area -->
             <div class="result-area" id="resultArea">
                 <div class="result-grid">
                     <div class="result-box">
@@ -352,7 +344,7 @@
                     </div>
                 </div>
                 <p class="result-insight" id="insightText">💭 Calculating your time...</p>
-                <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+                <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
                     <button class="btn-reset" id="resetBtnActive">Reset Calculator</button>
                 </div>
             </div>
@@ -388,16 +380,13 @@
 
             errorMsg.style.display = 'none';
 
-            // Calculations
             const annualHours = hoursPerWeek * 52;
             const hourlyVal = income / annualHours;
             const hoursRequired = price / hourlyVal;
 
-            // Display Results
             hourlyResult.textContent = `$${hourlyVal.toFixed(2)} / hr`;
             timeResult.textContent = `${hoursRequired.toFixed(1)} hrs`;
 
-            // Dynamic Psychological Insight
             let insight = "";
             if (hoursRequired < 1) {
                 const minutes = Math.round(hoursRequired * 60);

@@ -57,7 +57,7 @@
             padding: 36px;
         }
 
-        /* Central Forest-Green Widget Card (~541 × 375 proportions) */
+        /* Central Forest-Green Widget Card */
         .widget-card {
             position: relative;
             width: 100%;
@@ -112,7 +112,7 @@
             margin: 0;
         }
 
-        /* Interactive Inputs Grid (3 horizontal items matching Screenshot 2) */
+        /* Interactive Inputs Grid */
         .inputs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -276,6 +276,20 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments to fix squishing */
+        @media (max-width: 580px) {
+            .inputs-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .widget-card {
+                padding: 16px 18px;
+            }
+            .widget-title {
+                font-size: 19px;
+            }
         }
     </style>
 </head>

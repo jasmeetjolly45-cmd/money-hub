@@ -10,14 +10,17 @@
     <style>
         :root {
             --bg-forest: #0B3022;
-            --bg-card-inner: #F3EFE6;
-            --text-dark: #1F2E28;
-            --text-muted: #5A6661;
+            --bg-input: #123D2D;
+            --bg-input-focus: #174A37;
             --cream: #F5F2EB;
-            --gold: #C2A346;
-            --border-card: rgba(11, 48, 34, 0.12);
+            --cream-muted: #D1CBC0;
+            --gold: #D4AF37;
+            --gold-light: #E6CA65;
+            --border-forest: rgba(212, 175, 55, 0.15);
+            --border-focus: rgba(212, 175, 55, 0.4);
         }
 
+        /* Notion Embed Theme Synchronization */
         html, body {
             margin: 0;
             padding: 0;
@@ -25,6 +28,7 @@
             height: 100%;
             background: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--cream);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -37,12 +41,12 @@
             }
         }
 
-        /* Outer composition frame matching 1502x773 ratio */
+        /* Exact Composition matching the 613 × 447 reference ratio with ~36px frame spacing */
         .composition {
             position: relative;
             width: 100%;
-            max-width: 1502px;
-            aspect-ratio: 1502 / 773;
+            max-width: 613px;
+            aspect-ratio: 613 / 447;
             background-image: url('background.png');
             background-size: cover;
             background-position: center;
@@ -50,130 +54,107 @@
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
-            padding: 20px;
+            padding: 36px;
         }
 
-        /* Central Forest-Green Widget Card */
+        /* Central Forest-Green Widget Card (~541 × 375 proportions) */
         .widget-card {
             position: relative;
-            width: 72%;
-            max-width: 1020px;
-            height: 84%;
-            max-height: 590px;
+            width: 100%;
+            height: 100%;
             background-color: var(--bg-forest);
-            border-radius: 20px;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-forest);
+            border-radius: 14px;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
             display: flex;
             flex-direction: column;
-            padding: 28px 36px;
+            padding: 22px 26px;
             box-sizing: border-box;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
         }
 
         .widget-card::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
         .widget-card::-webkit-scrollbar-thumb {
             background-color: var(--gold);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
-        /* Header */
+        /* Header Section */
         .widget-header {
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 14px;
         }
 
-        .widget-title-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .widget-icon {
+            font-size: 16px;
             margin-bottom: 2px;
+            display: inline-block;
         }
 
         .widget-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 500;
             color: var(--cream);
-            margin: 0;
+            margin: 0 0 2px 0;
+            letter-spacing: -0.01em;
         }
 
         .widget-subtitle {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 14px;
-            color: rgba(245, 242, 235, 0.7);
+            font-size: 12px;
+            color: var(--cream-muted);
             margin: 0;
         }
 
-        /* Two-Column Layout Grid */
-        .content-grid {
+        /* Interactive Inputs Grid (3 horizontal items matching Screenshot 2) */
+        .inputs-grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 20px;
-            flex-grow: 1;
-        }
-
-        /* Cream Cards Style from Screenshot 3 */
-        .card-panel {
-            background-color: var(--bg-card-inner);
-            border-radius: 12px;
-            padding: 18px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.6);
-            border: 1px solid var(--border-card);
-        }
-
-        .panel-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(11, 48, 34, 0.08);
-            padding-bottom: 6px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .input-group {
-            margin-bottom: 12px;
-        }
-        .input-group:last-child {
-            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .input-label {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-            display: block;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-bottom: 5px;
         }
 
         .input-field-wrapper {
             position: relative;
             display: flex;
             align-items: center;
-            background-color: #FFFFFF;
-            border: 1px solid rgba(11, 48, 34, 0.15);
+            background-color: var(--bg-input);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 6px;
             transition: all 0.2s ease;
         }
 
         .input-field-wrapper:focus-within {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(194, 163, 70, 0.15);
+            background-color: var(--bg-input-focus);
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
         }
 
         .input-prefix {
-            padding-left: 10px;
-            font-size: 13px;
-            color: var(--text-muted);
+            padding-left: 8px;
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 500;
         }
 
         .input-field {
@@ -181,134 +162,120 @@
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text-dark);
+            color: var(--cream);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 14px;
-            padding: 9px 10px 9px 4px;
-        }
-
-        /* Right Panel / Results Display */
-        .result-empty-state {
-            color: var(--text-muted);
-            font-size: 13px;
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            text-align: center;
-            margin: auto 0;
-        }
-
-        .result-content {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .hourly-display-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--text-dark);
-        }
-
-        .hourly-value-highlight {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .main-time-result {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .time-big-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 34px;
-            font-weight: 600;
-            color: var(--bg-forest);
-            line-height: 1.1;
-        }
-
-        .time-description {
             font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 4px;
+            padding: 8px 10px 8px 4px;
         }
 
-        .insight-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 13px;
-            color: var(--text-dark);
-            border-top: 1px solid rgba(11, 48, 34, 0.08);
-            padding-top: 8px;
-            margin-top: auto;
+        .input-field::placeholder {
+            color: rgba(245, 242, 235, 0.25);
         }
 
-        /* Bottom Action Row */
+        /* Actions & Buttons */
         .actions-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 16px;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 10px;
         }
 
         .btn-calculate {
-            background-color: var(--bg-forest);
-            color: var(--cream);
+            background-color: var(--gold);
+            color: #0B3022;
             border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
+            border-radius: 5px;
+            padding: 8px 16px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: opacity 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-calculate:hover {
-            opacity: 0.9;
+            background-color: var(--gold-light);
         }
 
         .btn-reset {
-            background: rgba(255, 255, 255, 0.15);
+            background: transparent;
             border: none;
-            color: var(--cream);
+            color: var(--cream-muted);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
-            padding: 10px 16px;
-            border-radius: 6px;
-            transition: background 0.2s ease;
+            padding: 4px 6px;
+            transition: color 0.2s ease;
         }
 
         .btn-reset:hover {
-            background: rgba(255, 255, 255, 0.25);
+            color: var(--cream);
+        }
+
+        /* Result Area */
+        .result-area {
+            display: none;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .result-box {
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            padding: 8px 12px;
+            border-left: 2px solid var(--gold);
+        }
+
+        .result-box-label {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-bottom: 2px;
+        }
+
+        .result-box-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .result-insight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            font-style: italic;
+            color: var(--cream);
+            background-color: rgba(212, 175, 55, 0.05);
+            padding: 6px 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            margin: 0;
         }
 
         .error-message {
-            color: #ff9e9e;
+            color: #E06D53;
             font-size: 11px;
-            margin-top: 6px;
+            margin-top: 4px;
             display: none;
         }
 
-        @media (max-width: 900px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            .widget-card {
-                width: 90%;
-                height: 90%;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -317,89 +284,63 @@
     <div class="composition">
         <div class="widget-card">
             
-            <!-- Header -->
+            <!-- Widget Header -->
             <div class="widget-header">
-                <div class="widget-title-row">
-                    <span style="font-size: 16px;">⏳</span>
-                    <h1 class="widget-title">What's Your Time Worth?</h1>
-                </div>
-                <p class="widget-subtitle">See what your spending costs in hours, not just dollars.</p>
+                <div class="widget-icon">💼</div>
+                <h1 class="widget-title">How Much Is My Time Worth?</h1>
+                <p class="widget-subtitle">Turn money into time. Understand the true human cost of your purchases.</p>
             </div>
 
-            <!-- Two Column Interactive Layout -->
-            <div class="content-grid">
-                
-                <!-- Left Column: Inputs -->
-                <div class="card-panel">
-                    <div>
-                        <div class="panel-header">
-                            <span>💼</span> Your Income
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label" for="incomeInput">Annual income</label>
-                            <div class="input-field-wrapper">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="incomeInput" class="input-field" placeholder="100000" min="1" step="any">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label class="input-label" for="hoursInput">Hours worked per week</label>
-                            <div class="input-field-wrapper">
-                                <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 10px;">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 14px;">
-                        <div class="panel-header">
-                            <span>🏷️</span> Thinking About a Purchase?
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label" for="priceInput">Purchase price</label>
-                            <div class="input-field-wrapper">
-                                <span class="input-prefix">$</span>
-                                <input type="number" id="priceInput" class="input-field" placeholder="1000" min="0" step="any">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="errorMsg" class="error-message">Please enter valid values for all fields.</div>
-                </div>
-
-                <!-- Right Column: Results -->
-                <div class="card-panel" id="rightPanel">
-                    <div class="panel-header">
-                        <span>⏳</span> Your Time Cost
-                    </div>
-
-                    <div class="result-empty-state" id="emptyStateText">
-                        Enter your income and a purchase price on the left to reveal how many hours of your life it costs.
-                    </div>
-
-                    <div class="result-content" id="resultContent">
-                        <div class="hourly-display-row">
-                            <span>Hourly value:</span>
-                            <span class="hourly-value-highlight" id="hourlyResult">$0.00 / hour</span>
-                        </div>
-
-                        <div class="main-time-result">
-                            <div class="time-big-number" id="timeResult">0.0 HOURS</div>
-                            <div class="time-description" id="timeDescriptionDetail">Calculated work time equivalent</div>
-                        </div>
-
-                        <div class="insight-quote" id="insightText">
-                            "Is it worth the time it takes to earn it?"
-                        </div>
+            <!-- Inputs Section -->
+            <div class="inputs-grid" id="inputSection">
+                <div class="input-group">
+                    <label class="input-label" for="incomeInput">Annual Income</label>
+                    <div class="input-field-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="incomeInput" class="input-field" placeholder="60000" min="1" step="any">
                     </div>
                 </div>
 
+                <div class="input-group">
+                    <label class="input-label" for="hoursInput">Hours / Week</label>
+                    <div class="input-field-wrapper">
+                        <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 8px;">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="priceInput">Cost ($)</label>
+                    <div class="input-field-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="priceInput" class="input-field" placeholder="200" min="0" step="any">
+                    </div>
+                </div>
             </div>
 
-            <!-- Bottom Actions -->
-            <div class="actions-row">
+            <div id="errorMsg" class="error-message">Please enter valid positive numbers.</div>
+
+            <!-- Initial Action Controls -->
+            <div class="actions-row" id="initialActions">
                 <button class="btn-calculate" id="calcBtn">Calculate Time Cost</button>
-                <button class="btn-reset" id="resetBtn">Reset</button>
+                <button class="btn-reset" id="resetBtn" style="visibility: hidden;">Reset</button>
+            </div>
+
+            <!-- Dynamic Result Area -->
+            <div class="result-area" id="resultArea">
+                <div class="result-grid">
+                    <div class="result-box">
+                        <div class="result-box-label">Hourly Value</div>
+                        <div class="result-box-value" id="hourlyResult">$0.00</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-box-label">Time Cost</div>
+                        <div class="result-box-value" id="timeResult">0.0 hrs</div>
+                    </div>
+                </div>
+                <p class="result-insight" id="insightText">💭 Calculating your time...</p>
+                <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+                    <button class="btn-reset" id="resetBtnActive">Reset Calculator</button>
+                </div>
             </div>
 
         </div>
@@ -408,17 +349,17 @@
     <script>
         const calcBtn = document.getElementById('calcBtn');
         const resetBtn = document.getElementById('resetBtn');
+        const resetBtnActive = document.getElementById('resetBtnActive');
+        const initialActions = document.getElementById('initialActions');
+        const resultArea = document.getElementById('resultArea');
         const errorMsg = document.getElementById('errorMsg');
 
         const incomeInput = document.getElementById('incomeInput');
         const hoursInput = document.getElementById('hoursInput');
         const priceInput = document.getElementById('priceInput');
 
-        const emptyStateText = document.getElementById('emptyStateText');
-        const resultContent = document.getElementById('resultContent');
         const hourlyResult = document.getElementById('hourlyResult');
         const timeResult = document.getElementById('timeResult');
-        const timeDescriptionDetail = document.getElementById('timeDescriptionDetail');
         const insightText = document.getElementById('insightText');
 
         function performCalculation() {
@@ -438,34 +379,32 @@
             const hourlyVal = income / annualHours;
             const hoursRequired = price / hourlyVal;
 
-            // Update UI
-            hourlyResult.textContent = `$${hourlyVal.toFixed(2)} / hour`;
-            timeResult.textContent = `${hoursRequired.toFixed(1)} HOURS`;
+            // Display Results
+            hourlyResult.textContent = `$${hourlyVal.toFixed(2)} / hr`;
+            timeResult.textContent = `${hoursRequired.toFixed(1)} hrs`;
 
-            // Breakdown of hours into hours & minutes for extra human context
-            const totalMinutes = Math.round(hoursRequired * 60);
-            const hrs = Math.floor(totalMinutes / 60);
-            const mins = totalMinutes % 60;
-            
-            if (hrs === 0) {
-                timeDescriptionDetail.textContent = `That's approximately ${mins} minutes of work.`;
-            } else {
-                timeDescriptionDetail.textContent = `That's approximately ${hrs} hours${mins > 0 ? ` and ${mins} minutes` : ''} of work.`;
-            }
-
-            // Insight logic
+            // Dynamic Psychological Insight
+            let insight = "";
             if (hoursRequired < 1) {
-                insightText.textContent = `"A minor transaction — less than an hour of your workday."`;
-            } else if (hoursRequired >= 1 && hoursRequired < 8) {
-                insightText.textContent = `"Worth considering: this represents part of a standard workday."`;
-            } else if (hoursRequired >= 8 && hoursRequired < 40) {
-                insightText.textContent = `"A substantial commitment — multiple days of labor."`;
+                const minutes = Math.round(hoursRequired * 60);
+                insight = `💭 That's about ${minutes} minutes of work. A minor trade.`;
+            } else if (hoursRequired >= 1 && hoursRequired < 4) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — a fraction of your workweek.`;
+            } else if (hoursRequired >= 4 && hoursRequired < 8) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — almost a full workday.`;
+            } else if (hoursRequired >= 8 && hoursRequired < 24) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than a full workday.`;
+            } else if (hoursRequired >= 24 && hoursRequired < 40) {
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — several days spent earning it.`;
             } else {
-                insightText.textContent = `"A major acquisition spanning a full workweek or more. Reflect carefully."`;
+                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than an entire workweek.`;
             }
 
-            emptyStateText.style.display = 'none';
-            resultContent.style.display = 'flex';
+            insightText.textContent = insight;
+
+            initialActions.style.display = 'none';
+            resultArea.style.display = 'block';
+            resetBtn.style.visibility = 'visible';
         }
 
         function resetCalculator() {
@@ -474,12 +413,14 @@
             priceInput.value = '';
             errorMsg.style.display = 'none';
 
-            resultContent.style.display = 'none';
-            emptyStateText.style.display = 'block';
+            resultArea.style.display = 'none';
+            initialActions.style.display = 'flex';
+            resetBtn.style.visibility = 'hidden';
         }
 
         calcBtn.addEventListener('click', performCalculation);
         resetBtn.addEventListener('click', resetCalculator);
+        resetBtnActive.addEventListener('click', resetCalculator);
 
         [incomeInput, hoursInput, priceInput].forEach(element => {
             element.addEventListener('keypress', function (e) {

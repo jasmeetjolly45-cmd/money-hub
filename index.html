@@ -108,9 +108,10 @@
             margin: 0;
         }
 
+        /* Fluid auto-adjusting grid that gracefully wraps on smaller viewports */
         .inputs-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 10px;
             margin-bottom: 12px;
         }
@@ -269,23 +270,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Enhanced Mobile Stack Trigger */
-        @media (max-width: 768px) {
-            .inputs-grid {
-                grid-template-columns: 1fr;
-                gap: 6px;
-            }
-            .composition {
-                padding: 16px;
-            }
-            .widget-card {
-                padding: 16px;
-            }
-            .widget-title {
-                font-size: 18px;
-            }
         }
     </style>
 </head>

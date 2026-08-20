@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How Much Is My Time Worth?</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-forest: #0B3022;
@@ -40,7 +42,10 @@
             }
         }
 
-        /* Fluid wrapper that maintains exact proportions without breaking mobile iframe heights */
+        /* =========================================
+           DESKTOP — ORIGINAL VERSION
+           ========================================= */
+
         .composition {
             position: relative;
             width: 100%;
@@ -264,154 +269,473 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(3px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(3px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
+
+        /* =========================================
+           MOBILE ONLY
+           Desktop is NOT affected by these rules
+           ========================================= */
+
+        @media screen and (max-width: 600px) {
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            /*
+             * Keep the exact same 613 : 447
+             * composition ratio as desktop.
+             *
+             * This prevents the mobile version
+             * from becoming vertically stretched.
+             */
+            .composition {
+                position: relative;
+
+                width: 100%;
+                height: auto;
+
+                aspect-ratio: 613 / 447;
+
+                max-width: none;
+                max-height: none;
+
+                padding: 28px 36px;
+
+                box-sizing: border-box;
+
+                background-size: cover;
+                background-position: center;
+
+                flex-shrink: 0;
+            }
+
+            /*
+             * Keep the card proportional to
+             * the composition.
+             */
+            .widget-card {
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+            }
+
+            /*
+             * Keep all 3 inputs on ONE ROW,
+             * exactly like desktop.
+             */
+            .inputs-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+            }
+
+            /*
+             * Preserve the desktop typography
+             * rather than allowing mobile
+             * browser sizing to enlarge it.
+             */
+            .widget-title {
+                font-size: 20px;
+            }
+
+            .widget-subtitle {
+                font-size: 10.5px;
+            }
+
+            .input-label {
+                font-size: 7.5px;
+            }
+
+            .input-field {
+                font-size: 10.5px;
+            }
+
+            .btn-calculate {
+                font-size: 10.5px;
+            }
+
+            .btn-reset {
+                font-size: 10.5px;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
     <div class="composition">
+
         <div class="widget-card">
-            
+
             <div class="widget-header">
                 <div class="widget-icon">💼</div>
-                <h1 class="widget-title">How Much Is My Time Worth?</h1>
-                <p class="widget-subtitle">Turn money into time. Understand the true human cost of your purchases.</p>
+
+                <h1 class="widget-title">
+                    How Much Is My Time Worth?
+                </h1>
+
+                <p class="widget-subtitle">
+                    Turn money into time. Understand the true human cost of your purchases.
+                </p>
             </div>
+
 
             <div class="inputs-grid" id="inputSection">
-                <div class="input-group">
-                    <label class="input-label" for="incomeInput">Annual Income</label>
-                    <div class="input-field-wrapper">
-                        <span class="input-prefix">$</span>
-                        <input type="number" id="incomeInput" class="input-field" placeholder="60000" min="1" step="any">
-                    </div>
-                </div>
 
                 <div class="input-group">
-                    <label class="input-label" for="hoursInput">Hours / Week</label>
+
+                    <label class="input-label" for="incomeInput">
+                        Annual Income
+                    </label>
+
                     <div class="input-field-wrapper">
-                        <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 6px;">
+
+                        <span class="input-prefix">$</span>
+
+                        <input
+                            type="number"
+                            id="incomeInput"
+                            class="input-field"
+                            placeholder="60000"
+                            min="1"
+                            step="any"
+                        >
+
                     </div>
+
                 </div>
 
+
                 <div class="input-group">
-                    <label class="input-label" for="priceInput">Cost ($)</label>
+
+                    <label class="input-label" for="hoursInput">
+                        Hours / Week
+                    </label>
+
                     <div class="input-field-wrapper">
-                        <span class="input-prefix">$</span>
-                        <input type="number" id="priceInput" class="input-field" placeholder="200" min="0" step="any">
+
+                        <input
+                            type="number"
+                            id="hoursInput"
+                            class="input-field"
+                            placeholder="40"
+                            min="0.1"
+                            step="any"
+                            style="padding-left: 6px;"
+                        >
+
                     </div>
+
                 </div>
+
+
+                <div class="input-group">
+
+                    <label class="input-label" for="priceInput">
+                        Cost ($)
+                    </label>
+
+                    <div class="input-field-wrapper">
+
+                        <span class="input-prefix">$</span>
+
+                        <input
+                            type="number"
+                            id="priceInput"
+                            class="input-field"
+                            placeholder="200"
+                            min="0"
+                            step="any"
+                        >
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div id="errorMsg" class="error-message">Please enter valid positive numbers.</div>
+
+            <div id="errorMsg" class="error-message">
+                Please enter valid positive numbers.
+            </div>
+
 
             <div class="actions-row" id="initialActions">
-                <button class="btn-calculate" id="calcBtn">Calculate Time Cost</button>
-                <button class="btn-reset" id="resetBtn" style="visibility: hidden;">Reset</button>
+
+                <button class="btn-calculate" id="calcBtn">
+                    Calculate Time Cost
+                </button>
+
+                <button
+                    class="btn-reset"
+                    id="resetBtn"
+                    style="visibility: hidden;"
+                >
+                    Reset
+                </button>
+
             </div>
 
+
             <div class="result-area" id="resultArea">
+
                 <div class="result-grid">
+
                     <div class="result-box">
-                        <div class="result-box-label">Hourly Value</div>
-                        <div class="result-box-value" id="hourlyResult">$0.00</div>
+
+                        <div class="result-box-label">
+                            Hourly Value
+                        </div>
+
+                        <div class="result-box-value" id="hourlyResult">
+                            $0.00
+                        </div>
+
                     </div>
+
+
                     <div class="result-box">
-                        <div class="result-box-label">Time Cost</div>
-                        <div class="result-box-value" id="timeResult">0.0 hrs</div>
+
+                        <div class="result-box-label">
+                            Time Cost
+                        </div>
+
+                        <div class="result-box-value" id="timeResult">
+                            0.0 hrs
+                        </div>
+
                     </div>
+
                 </div>
-                <p class="result-insight" id="insightText">💭 Calculating your time...</p>
+
+
+                <p class="result-insight" id="insightText">
+                    💭 Calculating your time...
+                </p>
+
+
                 <div style="display: flex; justify-content: flex-end; margin-top: 3px;">
-                    <button class="btn-reset" id="resetBtnActive">Reset Calculator</button>
+
+                    <button class="btn-reset" id="resetBtnActive">
+                        Reset Calculator
+                    </button>
+
                 </div>
+
             </div>
 
         </div>
+
     </div>
 
+
     <script>
+
         const calcBtn = document.getElementById('calcBtn');
+
         const resetBtn = document.getElementById('resetBtn');
+
         const resetBtnActive = document.getElementById('resetBtnActive');
+
         const initialActions = document.getElementById('initialActions');
+
         const resultArea = document.getElementById('resultArea');
+
         const errorMsg = document.getElementById('errorMsg');
 
+
         const incomeInput = document.getElementById('incomeInput');
+
         const hoursInput = document.getElementById('hoursInput');
+
         const priceInput = document.getElementById('priceInput');
 
+
         const hourlyResult = document.getElementById('hourlyResult');
+
         const timeResult = document.getElementById('timeResult');
+
         const insightText = document.getElementById('insightText');
 
+
         function performCalculation() {
+
             const income = parseFloat(incomeInput.value);
+
             const hoursPerWeek = parseFloat(hoursInput.value);
+
             const price = parseFloat(priceInput.value);
 
-            if (isNaN(income) || isNaN(hoursPerWeek) || isNaN(price) || income <= 0 || hoursPerWeek <= 0 || price < 0) {
+
+            if (
+                isNaN(income) ||
+                isNaN(hoursPerWeek) ||
+                isNaN(price) ||
+                income <= 0 ||
+                hoursPerWeek <= 0 ||
+                price < 0
+            ) {
+
                 errorMsg.style.display = 'block';
+
                 return;
+
             }
+
 
             errorMsg.style.display = 'none';
 
+
             const annualHours = hoursPerWeek * 52;
+
             const hourlyVal = income / annualHours;
+
             const hoursRequired = price / hourlyVal;
 
-            hourlyResult.textContent = `$${hourlyVal.toFixed(2)} / hr`;
-            timeResult.textContent = `${hoursRequired.toFixed(1)} hrs`;
+
+            hourlyResult.textContent =
+                `$${hourlyVal.toFixed(2)} / hr`;
+
+            timeResult.textContent =
+                `${hoursRequired.toFixed(1)} hrs`;
+
 
             let insight = "";
+
+
             if (hoursRequired < 1) {
+
                 const minutes = Math.round(hoursRequired * 60);
-                insight = `💭 That's about ${minutes} minutes of work. A minor trade.`;
-            } else if (hoursRequired >= 1 && hoursRequired < 4) {
-                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — a fraction of your workweek.`;
-            } else if (hoursRequired >= 4 && hoursRequired < 8) {
-                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — almost a full workday.`;
-            } else if (hoursRequired >= 8 && hoursRequired < 24) {
-                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than a full workday.`;
-            } else if (hoursRequired >= 24 && hoursRequired < 40) {
-                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — several days spent earning it.`;
-            } else {
-                insight = `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than an entire workweek.`;
+
+                insight =
+                    `💭 That's about ${minutes} minutes of work. A minor trade.`;
+
             }
+
+            else if (hoursRequired >= 1 && hoursRequired < 4) {
+
+                insight =
+                    `💭 That's about ${hoursRequired.toFixed(1)} hours of work — a fraction of your workweek.`;
+
+            }
+
+            else if (hoursRequired >= 4 && hoursRequired < 8) {
+
+                insight =
+                    `💭 That's about ${hoursRequired.toFixed(1)} hours of work — almost a full workday.`;
+
+            }
+
+            else if (hoursRequired >= 8 && hoursRequired < 24) {
+
+                insight =
+                    `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than a full workday.`;
+
+            }
+
+            else if (hoursRequired >= 24 && hoursRequired < 40) {
+
+                insight =
+                    `💭 That's about ${hoursRequired.toFixed(1)} hours of work — several days spent earning it.`;
+
+            }
+
+            else {
+
+                insight =
+                    `💭 That's about ${hoursRequired.toFixed(1)} hours of work — more than an entire workweek.`;
+
+            }
+
 
             insightText.textContent = insight;
 
+
             initialActions.style.display = 'none';
+
             resultArea.style.display = 'block';
+
             resetBtn.style.visibility = 'visible';
+
         }
+
 
         function resetCalculator() {
+
             incomeInput.value = '';
+
             hoursInput.value = '';
+
             priceInput.value = '';
+
             errorMsg.style.display = 'none';
 
+
             resultArea.style.display = 'none';
+
             initialActions.style.display = 'flex';
+
             resetBtn.style.visibility = 'hidden';
+
         }
 
-        calcBtn.addEventListener('click', performCalculation);
-        resetBtn.addEventListener('click', resetCalculator);
-        resetBtnActive.addEventListener('click', resetCalculator);
 
-        [incomeInput, hoursInput, priceInput].forEach(element => {
-            element.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    performCalculation();
+        calcBtn.addEventListener(
+            'click',
+            performCalculation
+        );
+
+
+        resetBtn.addEventListener(
+            'click',
+            resetCalculator
+        );
+
+
+        resetBtnActive.addEventListener(
+            'click',
+            resetCalculator
+        );
+
+
+        [
+            incomeInput,
+            hoursInput,
+            priceInput
+        ].forEach(element => {
+
+            element.addEventListener(
+                'keypress',
+                function (e) {
+
+                    if (e.key === 'Enter') {
+
+                        performCalculation();
+
+                    }
+
                 }
-            });
+            );
+
         });
+
     </script>
+
 </body>
 </html>

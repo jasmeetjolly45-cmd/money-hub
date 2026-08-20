@@ -67,17 +67,7 @@
             flex-direction: column;
             padding: 22px 26px;
             box-sizing: border-box;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--gold) transparent;
-        }
-
-        .widget-card::-webkit-scrollbar {
-            width: 3px;
-        }
-        .widget-card::-webkit-scrollbar-thumb {
-            background-color: var(--gold);
-            border-radius: 3px;
+            overflow: hidden;
         }
 
         .widget-header {
@@ -108,26 +98,30 @@
             margin: 0;
         }
 
-        /* Fluid auto-adjusting grid that gracefully wraps on smaller viewports */
+        /* Fixed 3-column row that stays side-by-side universally */
         .inputs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
             margin-bottom: 12px;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
 
         .input-label {
-            font-size: 8.5px;
+            font-size: 8px;
             font-weight: 600;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--cream-muted);
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .input-field-wrapper {
@@ -147,8 +141,8 @@
         }
 
         .input-prefix {
-            padding-left: 8px;
-            font-size: 11px;
+            padding-left: 6px;
+            font-size: 10px;
             color: var(--gold);
             font-weight: 500;
         }
@@ -161,7 +155,8 @@
             color: var(--cream);
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 11px;
-            padding: 7px 8px 7px 4px;
+            padding: 6px 6px 6px 2px;
+            min-width: 0;
         }
 
         .input-field::placeholder {
@@ -296,7 +291,7 @@
                 <div class="input-group">
                     <label class="input-label" for="hoursInput">Hours / Week</label>
                     <div class="input-field-wrapper">
-                        <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 8px;">
+                        <input type="number" id="hoursInput" class="input-field" placeholder="40" min="0.1" step="any" style="padding-left: 6px;">
                     </div>
                 </div>
 
